@@ -4,7 +4,6 @@ import connectToDB from "./database/db.js";
 import taskRoutes from "./routes/taskRoutes.js";
 
 
-
 dotenv.config()
 const app = express();
 const port = 3000;

@@ -47,7 +47,7 @@ router.get("/tasks", async (req, res) => {
 
 // Retrieve a single task item by its ID
 router.get("/:taskId", async (req, res) =>{
-    const todoId = req.params.taskId
+    const taskId = req.params.taskId
     try {
         const result = await Task.findById(taskId)
         res.send({
@@ -71,9 +71,7 @@ router.patch("/:taskId", async (req, res) =>{
     const taskId = req.params.taskId;
     const updatedTask = req.body;
     try {
-        const result = await Task.findByIdAndUpdate(taskId, updatedTask,{
-            new: true,
-        });
+        const result = await Task.findByIdAndUpdate(taskId, updatedTask,{new: true});
         res.send({
             success: true,
             message: "Task updated succesfully.",
@@ -91,8 +89,9 @@ router.patch("/:taskId", async (req, res) =>{
 
 // Delete a task item by its ID
 router.delete("/delete/:taskId", async (req, res) =>{
+    const taskId = req.params.taskId
     try {
-        await Task.findByIdAndDelete(req.params.taskId);
+        await Task.findByIdAndDelete(taskId);
         res.send({
             success: true,
             message: "Task deleted succesfully.",
