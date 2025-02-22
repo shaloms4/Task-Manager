@@ -12,25 +12,7 @@ app.use(express.json());
 connectToDB();
 
 
-app.get("/todos", async (req, res) => {
-    try{
-        const result = await Todo.find()
-        res.send({
-            success: true,
-            message: "Todo lists retrived succesfully",
-            data: result
-        });
-
-    }catch (error){
-        res.send({
-            success: true,
-            message: "failed to retrive todo list",
-            data: result
-    });
-  }
-})
-
-
+// Create a new todo item
 app.post("/create-todo", async(req, res) => {
     const todoDetails = req.body;
     try {
@@ -51,6 +33,27 @@ app.post("/create-todo", async(req, res) => {
 })
 
 
+// Retrieve all todo items from the database
+app.get("/todos", async (req, res) => {
+    try{
+        const result = await Todo.find()
+        res.send({
+            success: true,
+            message: "Todo lists retrived succesfully",
+            data: result
+        });
+
+    }catch (error){
+        res.send({
+            success: true,
+            message: "failed to retrive todo list",
+            data: result
+    });
+  }
+})
+
+
+// Retrieve a single todo item by its ID
 app.get("/:todoId", async (req, res) =>{
     const todoId = req.params.todoId
     try {
@@ -71,6 +74,7 @@ app.get("/:todoId", async (req, res) =>{
 })
 
 
+// Update a todo item by its ID
 app.patch("/:todoId", async (req, res) =>{
     const todoId = req.params.todoId;
     const updatedTodo = req.body;
@@ -93,6 +97,7 @@ app.patch("/:todoId", async (req, res) =>{
 })
 
 
+// Delete a todo item by its ID
 app.delete("/delete/:todoId", async (req, res) =>{
     try {
         await Todo.findByIdAndDelete(req.params.todoId);
@@ -111,6 +116,7 @@ app.delete("/delete/:todoId", async (req, res) =>{
 });
 
 
+// Start the Express server
 app.listen(port, () =>{
     console.log(`server running on ${port}`);
 });
